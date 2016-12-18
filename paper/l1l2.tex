@@ -29,4 +29,39 @@ Being convex, optimization is reliable and straightforward.
 % results
 We find YYY.
 
+\section{Method}
+
+The model is
+\begin{eqnarray}
+  y_{np} &=& \sum_{p'} B_{npp'}\,\left[
+      \sum_{\ell m} R_{p'\ell m}\,t_{\ell m}
+    + \sum_{k} A_{nk}\,x_{kp'}\right] + \sigma_{np}\,\epsilon_{np} \quad ,
+\end{eqnarray}
+where the $y_{np}$ are the data on wavelength $n$ in data pixel $p$,
+$B_{npp'}$ is the beam at frequency $n$, relating the response of data
+pixel $p$ to model-plane (map-plane) pixel $p'$, $R_{p'\ell m}$ is the
+spherical-harmonic transform from the $\ell m$ basis to the $p'$
+basis, $t_{\ell m}$ is the temperature map in the $\ell m$ basis,
+$A_{nk}$ is the design matrix containing every possible foreground or
+secondary anisotropy's relative contribution at wavelength $n$, the
+$x_{kp'}$ are the secondary and foreground maps, the $\sigma_{np}$ are
+the individual-pixel noise root-variances, and the $\epsilon_{np}$ are
+the normalized residuals (or pixel-noise contributions).
+
+The objective function is
+\begin{eqnarray}
+  Q &=&
+    \sum_{\ell m} C_{\ell m}^{-1}\,|t_{\ell m}|^2
+  + \sum_{k} \Lambda_k\,\sum_{p'} |x_{kp'}|
+  + \sum_{np} |\epsilon_{np}|^2 \quad ,
+\end{eqnarray}
+where the first term penalizes the temperature maps according to the
+expected variances $C_{\ell m}$ from the cosmological model, the
+second term asks each of the $K$ foreground and secondary maps $k$ to
+be sparse, and the third term is (effectively) the likelihood
+function.
+This objective function is convex, so a gradient descent in the space
+of the $t_{\ell m}$, the $x_{kp'}$, and the $\epsilon_{np}$ will
+obtain a unique set of maps.
+
 \end{document}
