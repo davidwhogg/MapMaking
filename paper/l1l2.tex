@@ -37,8 +37,8 @@ The model is
       \sum_{\ell m} R_{p'\ell m}\,t_{\ell m}
     + \sum_{k} A_{nk}\,x_{kp'}\right] + \sigma_{np}\,\epsilon_{np} \quad ,
 \end{eqnarray}
-where the $y_{np}$ are the data on wavelength $n$ in data pixel $p$,
-$B_{npp'}$ is the beam at frequency $n$, relating the response of data
+where $y_{np}$ is the datum at wavelength $n$ in data pixel $p$,
+$B_{npp'}$ is the beam-adjustment matrix for frequency $n$, relating the response of data
 pixel $p$ to model-plane (map-plane) pixel $p'$, $R_{p'\ell m}$ is the
 spherical-harmonic transform from the $\ell m$ basis to the $p'$
 basis, $t_{\ell m}$ is the temperature map in the $\ell m$ basis,
@@ -47,6 +47,35 @@ secondary anisotropy's relative contribution at wavelength $n$, the
 $x_{kp'}$ are the secondary and foreground maps, the $\sigma_{np}$ are
 the individual-pixel noise root-variances, and the $\epsilon_{np}$ are
 the normalized residuals (or pixel-noise contributions).
+
+One key idea is that the $A_{nk}$ design matrix will not just include the
+spectral dependence of thermal S--Z, dust, and synchrotron and so
+on. The idea is that it will contain every sensible frequency
+dependence of any possible sensible component. That's what supports
+the sparsity of the $x_{kp'}$ maps: Even if there is dust emission
+over most of the sky, it will be dust at different temperatures in
+different places.
+
+Another key idea is that the maps $x_{kp'}$ will be reconstructed on a
+pixel (or other!) basis that is higher (or no lower) resolution than
+the highest resolution data. This is a deconvolution model, in some
+sense.  The beam-adjustment matrices $B_{npp'}$ are kernels that take
+the maps on the high resolution $p'$ basis down to the lower
+resolution $p$ basis with the real point-spread function (or beam) at
+frequency $n$. For information-theoretic reasons, it would be a bad
+idea to make the $p'$ basis far higher resolution than the $p$ basis
+unless the number of wavelength maps $n$ is very large and the beams
+are extremely well known.
+
+While this method is very general, it does assume that the
+beam-adjustment matrices, transforms, and design matrix are perfectly
+known. That is, it assumes that there aren't components that have
+spectra unlike anything we have put into the design matrix (though we
+can throw crazy shit in there), and there aren't beam issues we
+haven't tracked and accounted for. For now, the method assumes that
+all the frequencies $n$ are measured on the same pixel map $p$, but
+that isn't a strong assumption; that is, it would be easy to relax
+this assumption without much change to the method or code.
 
 The objective function is
 \begin{eqnarray}
