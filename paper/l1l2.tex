@@ -1,5 +1,11 @@
 \documentclass[11pt]{article}
 
+\linespread{1.09}
+\sloppy
+\sloppypar
+\raggedbottom
+\frenchspacing
+
 \begin{document}
 
 \section*{Map-making by convex optimization}
@@ -31,6 +37,14 @@ We find YYY.
 
 \section{Method}
 
+The assumptions of the method we will develop and test in this project
+are as follows:
+\begin{itemize}\itemsep=0ex
+\item list
+\item assumptions
+\item here
+\end{itemize}
+
 The model is
 \begin{eqnarray}
   y_{np} &=& \sum_{p'} B_{npp'}\,\left[
@@ -38,7 +52,7 @@ The model is
     + \sum_{k} A_{nk}\,x_{kp'}\right] + \sigma_{np}\,\epsilon_{np} \quad ,
 \end{eqnarray}
 where $y_{np}$ is the datum at wavelength $n$ in data pixel $p$,
-$B_{npp'}$ is the beam-adjustment matrix for frequency $n$, relating the response of data
+$B_{npp'}$ is the beam-adjust\-ment matrix for frequency $n$, relating the response of data
 pixel $p$ to model-plane (map-plane) pixel $p'$, $R_{p'\ell m}$ is the
 spherical-harmonic transform from the $\ell m$ basis to the $p'$
 basis, $t_{\ell m}$ is the temperature map in the $\ell m$ basis,
@@ -59,7 +73,7 @@ different places.
 Another key idea is that the maps $x_{kp'}$ will be reconstructed on a
 pixel (or other!) basis that is higher (or no lower) resolution than
 the highest resolution data. This is a deconvolution model, in some
-sense.  The beam-adjustment matrices $B_{npp'}$ are kernels that take
+sense.  The beam-adjust\-ment matrices $B_{npp'}$ are kernels that take
 the maps on the high resolution $p'$ basis down to the lower
 resolution $p$ basis with the real point-spread function (or beam) at
 frequency $n$. For information-theoretic reasons, it would be a bad
@@ -68,7 +82,7 @@ unless the number of wavelength maps $n$ is very large and the beams
 are extremely well known.
 
 While this method is very general, it does assume that the
-beam-adjustment matrices, transforms, and design matrix are perfectly
+beam-adjust\-ment matrices, transforms, and design matrix are perfectly
 known. That is, it assumes that there aren't components that have
 spectra unlike anything we have put into the design matrix (though we
 can throw crazy shit in there), and there aren't beam issues we
